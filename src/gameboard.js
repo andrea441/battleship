@@ -17,25 +17,35 @@ class Gameboard {
   }
 
   placeShip(length, coordinates, isVertical) {
-    // Revisar que las coordenadas estén dentro del rango + Revisar que ningún espacio esté ocupado
     const positions = this.#getShipCoords(length, coordinates, isVertical);
-    const isValid = positions.every((position) =>
-      this.#checkValidity(position)
+    const isValid = positions.every(
+      (position) => this.#isInBounds(position) && this.#isCellEmpty(position)
     );
 
     if (!isValid) throw new Error('Invalid coordinates');
 
-    // Ya todo es válido, generar un barco de longitud y meterlo en todas las positions generadas
     const ship = new Ship(length);
     positions.forEach(([x, y]) => (this.board[x][y].ship = ship));
   }
 
-  receiveAttack() {}
+  receiveAttack([x, y]) {
+    if (!this.#isInBounds([x, y])) throw new Error('Invalid coordinates');
+    if (this.board[x][y].hit) return;
+
+    this.board[x][y].hit = true;
+    if (this.board[x][y].ship) this.board[x][y].ship.hit();
+  }
 
   allShipSunk() {}
 
-  #checkValidity([x, y]) {
-    if (x < 0 || x > 9 || y < 0 || y > 9) return false;
+  #isInBounds([x, y]) {
+    if (x < 0 || x >= this.board.length) return false;
+    if (y < 0 || y >= this.board[x].length) return false;
+
+    return true;
+  }
+
+  #isCellEmpty([x, y]) {
     if (this.board[x][y].ship !== null) return false;
 
     return true;

@@ -58,7 +58,7 @@ test('board doesnt allow to place a ship outside its limits', () => {
   expect(() => gameboard.placeShip(2, [10, 1], true)).toThrow();
 });
 
-test.skip('board can properly attack a square with boat', () => {
+test('board can properly attack a square with ship', () => {
   const gameboard = new Gameboard();
 
   gameboard.placeShip(2, [3, 4], true);
@@ -66,15 +66,33 @@ test.skip('board can properly attack a square with boat', () => {
   gameboard.receiveAttack([3, 4]);
 
   expect(gameboard.board[3][4].hit).toBe(true);
-  expect(gameboard.board[3][4].hit).toBe(true);
+  expect(gameboard.board[3][4].ship.hits).toBe(1);
 });
 
-test.skip('board can properly attack a square without boat', () => {
+test('board can properly attack a square without boat', () => {
   const gameboard = new Gameboard();
 
   gameboard.receiveAttack([4, 5]);
 
   expect(gameboard.board[4][5].hit).toBe(true);
+  expect(gameboard.board[4][5].ship).toBe(null);
+});
+
+test('board can not attack and already attacked square', () => {
+  const gameboard = new Gameboard();
+
+  gameboard.placeShip(2, [6, 1], true);
+
+  gameboard.receiveAttack([6, 1]);
+  gameboard.receiveAttack([6, 1]);
+
+  expect(gameboard.board[6][1].ship.hits).toBe(1);
+});
+
+test('attack throws an exception if coords are invalid', () => {
+  const gameboard = new Gameboard();
+
+  expect(() => gameboard.receiveAttack([11, 10])).toThrow();
 });
 
 test.skip('board with standing ships', () => {
