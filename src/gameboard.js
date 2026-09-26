@@ -14,6 +14,7 @@ class Gameboard {
     }
 
     this.board = board;
+    this.ships = [];
   }
 
   placeShip(length, coordinates, isVertical) {
@@ -26,6 +27,7 @@ class Gameboard {
 
     const ship = new Ship(length);
     positions.forEach(([x, y]) => (this.board[x][y].ship = ship));
+    this.ships.push(ship);
   }
 
   receiveAttack([x, y]) {
@@ -36,7 +38,15 @@ class Gameboard {
     if (this.board[x][y].ship) this.board[x][y].ship.hit();
   }
 
-  allShipSunk() {}
+  allShipSunk() {
+    if (this.ships.length === 0) return false;
+
+    for (const ship of this.ships) {
+      if (!ship.isSunk()) return false;
+    }
+
+    return true;
+  }
 
   #isInBounds([x, y]) {
     if (x < 0 || x >= this.board.length) return false;

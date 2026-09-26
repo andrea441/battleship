@@ -95,7 +95,13 @@ test('attack throws an exception if coords are invalid', () => {
   expect(() => gameboard.receiveAttack([11, 10])).toThrow();
 });
 
-test.skip('board with standing ships', () => {
+test('empty board ships should not be sunk', () => {
+  const gameboard = new Gameboard();
+
+  expect(gameboard.allShipSunk()).toBe(false);
+});
+
+test('board with standing ships', () => {
   const gameboard = new Gameboard();
 
   gameboard.placeShip(2, [1, 2], true);
@@ -103,14 +109,14 @@ test.skip('board with standing ships', () => {
   expect(gameboard.allShipSunk()).toBe(false);
 });
 
-test.skip('board without standing ships', () => {
+test('board without standing ships', () => {
   const gameboard = new Gameboard();
 
   gameboard.placeShip(3, [0, 4], false);
 
   gameboard.receiveAttack([0, 4]);
-  gameboard.receiveAttack([1, 4]);
-  gameboard.receiveAttack([2, 4]);
+  gameboard.receiveAttack([0, 5]);
+  gameboard.receiveAttack([0, 6]);
 
   expect(gameboard.allShipSunk()).toBe(true);
 });
