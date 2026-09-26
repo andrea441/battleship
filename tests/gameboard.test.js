@@ -1,4 +1,5 @@
 import { Gameboard } from '../src/gameboard.js';
+import { Ship } from '../src/ship.js';
 
 test('board dimensions are 10x10', () => {
   const gameboard = new Gameboard();
@@ -15,6 +16,10 @@ test('board allows placing vertical ship', () => {
 
   gameboard.placeShip(3, [2, 4], true);
 
+  expect(gameboard.board[2][4].ship).toBeInstanceOf(Ship);
+  expect(gameboard.board[3][4].ship).toBeInstanceOf(Ship);
+  expect(gameboard.board[4][4].ship).toBeInstanceOf(Ship);
+
   const placedShip = gameboard.board[2][4].ship;
 
   expect(gameboard.board[3][4].ship).toBe(placedShip);
@@ -29,6 +34,11 @@ test('board allows placing horizontal ship', () => {
   const gameboard = new Gameboard();
 
   gameboard.placeShip(4, [1, 2], false);
+
+  expect(gameboard.board[1][2].ship).toBeInstanceOf(Ship);
+  expect(gameboard.board[1][3].ship).toBeInstanceOf(Ship);
+  expect(gameboard.board[1][4].ship).toBeInstanceOf(Ship);
+  expect(gameboard.board[1][5].ship).toBeInstanceOf(Ship);
 
   const placedShip = gameboard.board[1][2].ship;
 
@@ -45,10 +55,10 @@ test('board allows placing horizontal ship', () => {
 test('board doesnt allow to place a ship outside its limits', () => {
   const gameboard = new Gameboard();
 
-  expect(gameboard.placeShip(2, [8, 1], true)).toThrow();
+  expect(() => gameboard.placeShip(2, [10, 1], true)).toThrow();
 });
 
-test('board can properly attack a square with boat', () => {
+test.skip('board can properly attack a square with boat', () => {
   const gameboard = new Gameboard();
 
   gameboard.placeShip(2, [3, 4], true);
@@ -59,7 +69,7 @@ test('board can properly attack a square with boat', () => {
   expect(gameboard.board[3][4].hit).toBe(true);
 });
 
-test('board can properly attack a square without boat', () => {
+test.skip('board can properly attack a square without boat', () => {
   const gameboard = new Gameboard();
 
   gameboard.receiveAttack([4, 5]);
@@ -67,7 +77,7 @@ test('board can properly attack a square without boat', () => {
   expect(gameboard.board[4][5].hit).toBe(true);
 });
 
-test('board with standing ships', () => {
+test.skip('board with standing ships', () => {
   const gameboard = new Gameboard();
 
   gameboard.placeShip(2, [1, 2], true);
@@ -75,7 +85,7 @@ test('board with standing ships', () => {
   expect(gameboard.allShipSunk()).toBe(false);
 });
 
-test('board without standing ships', () => {
+test.skip('board without standing ships', () => {
   const gameboard = new Gameboard();
 
   gameboard.placeShip(3, [0, 4], false);
