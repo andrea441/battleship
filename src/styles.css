@@ -1,0 +1,143 @@
+@font-face {
+  font-family: 'Syne';
+  src:
+    url('./fonts/syne.woff') format('woff'),
+    url('./fonts/syne.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src:
+    url('./fonts/dmsans.woff') format('woff'),
+    url('./fonts/dmsans.woff') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --background: #0d1117;
+  --surface: #151b24;
+  --surface-light: #1c2531;
+
+  --border: #2a3544;
+
+  --text: #e6edf3;
+  --text-muted: #8b9aaa;
+
+  --primary: #6ca6d9;
+  --primary-hover: #82b8e6;
+  --primary-dark: #315c7f;
+
+  --danger: #d66b7a;
+  --success: #72b89a;
+
+  --cell: #18212c;
+  --cell-hover: #243344;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Syne', sans-serif;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+button {
+  font-family: inherit;
+  background-color: var(--primary);
+  padding: 1em 0.5em;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+header {
+  display: flex;
+  background-color: var(--primary-dark);
+  padding: 1em;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.panel {
+  padding: 20px;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  border-radius: 8px;
+  margin: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  width: 450px;
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--border);
+  background-color: var(--cell);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell.ship {
+  background-color: var(--primary-dark);
+}
+
+.cell.hit {
+  background-color: var(--danger);
+}
+
+.cell.hit::after {
+  content: '×';
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.cell.missed {
+  background-color: var(--surface-light);
+}
+
+.cell.missed::after {
+  content: '•';
+  font-size: 1.5rem;
+}
+
+.cell:hover {
+  background-color: var(--cell-hover);
+}
+
+.hidden {
+  display: none;
+}

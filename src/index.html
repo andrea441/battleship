@@ -5,5 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>Battleship</h1>
+    </header>
+    <main>
+      <div class="panel" id="start-panel">
+        <button id="start-game">Start Game</button>
+      </div>
+
+      <div class="panels hidden" id="boards-panel">
+        <div class="panel">
+          <h2>User Board</h2>
+          <div id="player-board" class="board"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Computer Board</h2>
+          <div id="enemy-board" class="board"></div>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
