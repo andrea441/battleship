@@ -14,15 +14,24 @@
         <button id="start-game">Start Game</button>
       </div>
 
-      <div class="panels hidden" id="boards-panel">
-        <div class="panel">
-          <h2>User Board</h2>
-          <div id="player-board" class="board"></div>
+      <div id="boards-panel" class="hidden">
+        <div class="panel" id="game-message">
+          Aquí irán los mensajes para guiar el juego
         </div>
+        <div class="panels">
+          <div class="panel">
+            <h2>User Board</h2>
 
-        <div class="panel">
-          <h2>Computer Board</h2>
-          <div id="enemy-board" class="board"></div>
+            <div id="player-board" class="board"></div>
+
+            <button id="horizontal" class="secondary-button">Horizontal</button>
+            <button id="vertical" class="secondary-button">Vertical</button>
+          </div>
+
+          <div class="panel">
+            <h2>Computer Board</h2>
+            <div id="enemy-board" class="board"></div>
+          </div>
         </div>
       </div>
     </main>

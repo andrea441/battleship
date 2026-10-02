@@ -73,6 +73,25 @@ button:hover {
   background-color: var(--primary-hover);
 }
 
+.secondary-button {
+  background-color: var(--text);
+  color: var(--background);
+}
+
+.secondary-button:hover {
+  background-color: #d4d4d4;
+  transform: translateY(-1px);
+}
+
+button.selected {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+button.selected:hover {
+  background-color: #2a2a2a;
+}
+
 header {
   display: flex;
   background-color: var(--primary-dark);
