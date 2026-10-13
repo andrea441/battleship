@@ -1,5 +1,9 @@
 const userBoardEl = document.querySelector('#player-board');
 const computerBoardEl = document.querySelector('#enemy-board');
+const messagePlaceholder = document.querySelector('#game-message');
+
+const verticalButton = document.getElementById('vertical');
+const horizontalButton = document.getElementById('horizontal');
 
 export function generateBoard(type) {
   const boardElement = type === 'user' ? userBoardEl : computerBoardEl;
@@ -38,4 +42,40 @@ export function renderBoard(type, board) {
 
     userBoardEl.appendChild(cell);
   }
+}
+
+export function renderMessage(message) {
+  messagePlaceholder.textContent = message;
+}
+
+export function renderPositionButton(isVertical) {
+  if (isVertical) {
+    verticalButton.classList.add('selected');
+    horizontalButton.classList.remove('selected');
+  } else {
+    horizontalButton.classList.add('selected');
+    verticalButton.classList.remove('selected');
+  }
+}
+
+export function renderShipPreview(coordinates, isValid) {
+  for (const [x, y] of coordinates) {
+    const cell = userBoardEl.querySelector(
+      `.cell[data-row="${x}"][data-column="${y}"]`
+    );
+
+    if (isValid) {
+      cell.classList.add('valid');
+    } else {
+      cell.classList.add('invalid');
+    }
+  }
+}
+
+export function clearShipPreview() {
+  const previewCells = document.querySelectorAll('.valid', '.invalid');
+
+  previewCells.forEach((cell) => {
+    cell.classList.remove('valid', 'invalid');
+  });
 }

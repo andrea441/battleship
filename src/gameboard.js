@@ -18,15 +18,12 @@ class Gameboard {
   }
 
   placeShip(length, coordinates, isVertical) {
-    const positions = this.#getShipCoords(length, coordinates, isVertical);
-    const isValid = positions.every(
-      (position) => this.#isInBounds(position) && this.#isCellEmpty(position)
-    );
+    const placement = this.getShipPlacement(length, coordinates, isVertical);
 
-    if (!isValid) throw new Error('Invalid coordinates');
+    if (!placement.isValid) throw new Error('Invalid coordinates');
 
     const ship = new Ship(length);
-    positions.forEach(([x, y]) => (this.board[x][y].ship = ship));
+    placement.coordinates.forEach(([x, y]) => (this.board[x][y].ship = ship));
     this.ships.push(ship);
   }
 
@@ -46,6 +43,16 @@ class Gameboard {
     }
 
     return true;
+  }
+
+  getShipPlacement(length, coordinates, isVertical) {
+    const newCoords = this.#getShipCoords(length, coordinates, isVertical);
+
+    const isValid = newCoords.every((coord) => {
+      return this.#isInBounds(coord) && this.#isCellEmpty(coord);
+    });
+
+    return { coordinates: newCoords, isValid };
   }
 
   #isInBounds([x, y]) {

@@ -27,7 +27,26 @@ class Game {
     this.user.board.placeShip(length, coordinates, this.isVertical);
     this.shipCurrentIndex++;
 
-    if (this.shipCurrentIndex === 5) this.phase = 'player-turn';
+    if (this.shipCurrentIndex >= 5) {
+      this.phase = 'player-turn';
+      this.message = "It's player's turn!";
+      return;
+    }
+
+    const shipName = this.shipsToPlace[this.shipCurrentIndex].name;
+    this.message = `Player has to place ${shipName}.`;
+  }
+
+  getPlayerShipPlacement(coordinates) {
+    if (this.phase !== 'setup' || this.shipCurrentIndex >= 5) return;
+
+    const length = this.shipsToPlace[this.shipCurrentIndex].size;
+
+    return this.user.board.getShipPlacement(
+      length,
+      coordinates,
+      this.isVertical
+    );
   }
 
   startGame() {
@@ -36,7 +55,7 @@ class Game {
 
     const shipName = this.shipsToPlace[this.shipCurrentIndex].name;
 
-    this.message = `Player has to place ${shipName}`;
+    this.message = `Player has to place ${shipName}.`;
   }
 }
 

@@ -153,6 +153,14 @@ header {
   font-size: 1.5rem;
 }
 
+.cell.valid {
+  background-color: var(--success);
+}
+
+.cell.invalid {
+  background-color: var(--danger);
+}
+
 .cell:hover {
   background-color: var(--cell-hover);
 }

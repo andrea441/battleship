@@ -1,6 +1,6 @@
 import './styles.css';
 import { Game } from './game.js';
-import { generateBoard, renderBoard } from './DOM.js';
+import * as DOM from './DOM.js';
 
 const game = new Game();
 
@@ -16,24 +16,25 @@ startButton.addEventListener('click', () => {
   startPanel.classList.add('hidden');
   boardsPanel.classList.remove('hidden');
 
-  generateBoard('user');
-  generateBoard('computer');
+  DOM.generateBoard('user');
+  DOM.generateBoard('computer');
 
   game.startGame();
+
+  DOM.renderMessage(game.message);
+  DOM.renderPositionButton(game.isVertical);
 });
 
 verticalButton.addEventListener('click', () => {
   game.isVertical = true;
 
-  verticalButton.classList.add('selected');
-  horizontalButton.classList.remove('selected');
+  DOM.renderPositionButton(game.isVertical);
 });
 
 horizontalButton.addEventListener('click', () => {
   game.isVertical = false;
 
-  horizontalButton.classList.add('selected');
-  verticalButton.classList.remove('selected');
+  DOM.renderPositionButton(game.isVertical);
 });
 
 playerBoard.addEventListener('click', (event) => {
@@ -43,5 +44,21 @@ playerBoard.addEventListener('click', (event) => {
   const column = Number(event.target.dataset.column);
 
   game.placePlayerShip([row, column]);
-  renderBoard('user', game.user.board);
+  DOM.renderBoard('user', game.user.board);
+  DOM.renderMessage(game.message);
+});
+
+playerBoard.addEventListener('mouseover', (event) => {
+  if (!event.target.classList.contains('cell')) return;
+
+  DOM.clearShipPreview();
+
+  const row = Number(event.target.dataset.row);
+  const column = Number(event.target.dataset.column);
+
+  // Vamos a calcular la previsualización de las celdas
+  const placement = game.getPlayerShipPlacement([row, column]);
+
+  // Vamos a pintar las celdas
+  DOM.renderShipPreview(placement.coordinates, placement.isValid);
 });
