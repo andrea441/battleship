@@ -51,14 +51,17 @@ playerBoard.addEventListener('click', (event) => {
 playerBoard.addEventListener('mouseover', (event) => {
   if (!event.target.classList.contains('cell')) return;
 
+  if (game.phase !== 'setup') return;
+
   DOM.clearShipPreview();
 
   const row = Number(event.target.dataset.row);
   const column = Number(event.target.dataset.column);
 
-  // Vamos a calcular la previsualización de las celdas
   const placement = game.getPlayerShipPlacement([row, column]);
-
-  // Vamos a pintar las celdas
   DOM.renderShipPreview(placement.coordinates, placement.isValid);
+});
+
+playerBoard.addEventListener('mouseout', () => {
+  DOM.clearShipPreview();
 });

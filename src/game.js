@@ -22,19 +22,23 @@ class Game {
   placePlayerShip(coordinates) {
     if (this.phase !== 'setup') return;
 
-    const length = this.shipsToPlace[this.shipCurrentIndex].size;
+    try {
+      const length = this.shipsToPlace[this.shipCurrentIndex].size;
 
-    this.user.board.placeShip(length, coordinates, this.isVertical);
-    this.shipCurrentIndex++;
+      this.user.board.placeShip(length, coordinates, this.isVertical);
+      this.shipCurrentIndex++;
 
-    if (this.shipCurrentIndex >= 5) {
-      this.phase = 'player-turn';
-      this.message = "It's player's turn!";
-      return;
+      if (this.shipCurrentIndex >= 5) {
+        this.phase = 'player-turn';
+        this.message = "It's player's turn!";
+        return;
+      }
+
+      const shipName = this.shipsToPlace[this.shipCurrentIndex].name;
+      this.message = `Player has to place ${shipName}.`;
+    } catch (error) {
+      this.message = error.message;
     }
-
-    const shipName = this.shipsToPlace[this.shipCurrentIndex].name;
-    this.message = `Player has to place ${shipName}.`;
   }
 
   getPlayerShipPlacement(coordinates) {

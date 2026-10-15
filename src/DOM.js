@@ -64,6 +64,8 @@ export function renderShipPreview(coordinates, isValid) {
       `.cell[data-row="${x}"][data-column="${y}"]`
     );
 
+    if (!cell) return;
+
     if (isValid) {
       cell.classList.add('valid');
     } else {
@@ -73,7 +75,7 @@ export function renderShipPreview(coordinates, isValid) {
 }
 
 export function clearShipPreview() {
-  const previewCells = document.querySelectorAll('.valid', '.invalid');
+  const previewCells = document.querySelectorAll('.valid, .invalid');
 
   previewCells.forEach((cell) => {
     cell.classList.remove('valid', 'invalid');

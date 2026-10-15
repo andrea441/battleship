@@ -20,7 +20,8 @@ class Gameboard {
   placeShip(length, coordinates, isVertical) {
     const placement = this.getShipPlacement(length, coordinates, isVertical);
 
-    if (!placement.isValid) throw new Error('Invalid coordinates');
+    if (!placement.isValid)
+      throw new Error('Invalid coordinates. Place your ship in another spot.');
 
     const ship = new Ship(length);
     placement.coordinates.forEach(([x, y]) => (this.board[x][y].ship = ship));
@@ -28,7 +29,8 @@ class Gameboard {
   }
 
   receiveAttack([x, y]) {
-    if (!this.#isInBounds([x, y])) throw new Error('Invalid coordinates');
+    if (!this.#isInBounds([x, y]))
+      throw new Error('Invalid coordinates. Place your ship in another spot.');
     if (this.board[x][y].hit) return;
 
     this.board[x][y].hit = true;
