@@ -4,11 +4,11 @@ import * as DOM from './DOM.js';
 
 const game = new Game();
 
-// Vamos a hacer que jale el start game
 const startButton = document.getElementById('start-game');
 const startPanel = document.getElementById('start-panel');
 const boardsPanel = document.getElementById('boards-panel');
 const playerBoard = document.getElementById('player-board');
+const enemyBoard = document.getElementById('enemy-board');
 const verticalButton = document.getElementById('vertical');
 const horizontalButton = document.getElementById('horizontal');
 
@@ -44,6 +44,14 @@ playerBoard.addEventListener('click', (event) => {
   const column = Number(event.target.dataset.column);
 
   game.placePlayerShip([row, column]);
+
+  if (game.phase !== 'setup') {
+    DOM.clearShipPreview();
+    // Esconder los botones de vertical / horizontal
+    horizontalButton.classList.add('hidden');
+    verticalButton.classList.add('hidden');
+  }
+
   DOM.renderBoard('user', game.user.board);
   DOM.renderMessage(game.message);
 });
@@ -64,4 +72,16 @@ playerBoard.addEventListener('mouseover', (event) => {
 
 playerBoard.addEventListener('mouseout', () => {
   DOM.clearShipPreview();
+});
+
+enemyBoard.addEventListener('click', (event) => {
+  if (!event.target.classList.contains('cell')) return;
+
+  if (game.phase !== 'player-turn') return;
+
+  const row = Number(event.target.dataset.row);
+  const column = Number(event.target.dataset.column);
+
+  game.attackEnemyBoard([row, column]);
+  DOM.renderBoard('computer', game.computer.board);
 });

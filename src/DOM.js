@@ -37,8 +37,11 @@ export function renderBoard(type, board) {
     cell.classList.remove('hit', 'ship', 'missed');
 
     if (cellStatus.ship && cellStatus.hit) cell.classList.add('hit');
-    else if (cellStatus.ship) cell.classList.add('ship');
     else if (cellStatus.hit) cell.classList.add('missed');
+
+    if (type === 'user') {
+      if (cellStatus.ship) cell.classList.add('ship');
+    }
 
     userBoardEl.appendChild(cell);
   }

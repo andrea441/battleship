@@ -53,9 +53,44 @@ class Game {
     );
   }
 
+  attackEnemyBoard(coordinates) {
+    if (this.phase !== 'player-turn') return;
+
+    this.computer.board.receiveAttack(coordinates);
+    this.phase = 'computer-turn';
+
+    // hay que jugar el turno de la computadora lol
+  }
+
+  generateRandomEnemyShips() {
+    for (const ship of this.shipsToPlace) {
+      while (true) {
+        const x = Math.floor(Math.random() * 10);
+        const y = Math.floor(Math.random() * 10);
+
+        const isVertical = Math.random() < 0.5;
+
+        const size = ship.size;
+
+        const placement = this.computer.board.getShipPlacement(
+          size,
+          [x, y],
+          isVertical
+        );
+
+        if (placement.isValid) {
+          this.computer.board.placeShip(size, [x, y], isVertical);
+          break;
+        }
+      }
+    }
+  }
+
   startGame() {
     this.phase = 'setup';
     this.shipCurrentIndex = 0;
+
+    this.generateRandomEnemyShips();
 
     const shipName = this.shipsToPlace[this.shipCurrentIndex].name;
 
