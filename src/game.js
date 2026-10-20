@@ -86,6 +86,19 @@ class Game {
     }
   }
 
+  playComputerTurn() {
+    if (this.phase !== 'computer-turn') return;
+
+    const availableCells = this.user.board.getAvailableCoords();
+
+    const randomCoordinates =
+      availableCells[Math.floor(Math.random() * availableCells.length)];
+
+    this.user.board.receiveAttack(randomCoordinates);
+    this.phase = 'player-turn';
+    this.message = "Computer attacked, it's player's turn!";
+  }
+
   startGame() {
     this.phase = 'setup';
     this.shipCurrentIndex = 0;

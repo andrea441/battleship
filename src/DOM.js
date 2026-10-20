@@ -43,7 +43,7 @@ export function renderBoard(type, board) {
       if (cellStatus.ship) cell.classList.add('ship');
     }
 
-    userBoardEl.appendChild(cell);
+    boardElement.appendChild(cell);
   }
 }
 

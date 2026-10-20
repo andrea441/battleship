@@ -57,6 +57,15 @@ class Gameboard {
     return { coordinates: newCoords, isValid };
   }
 
+  getAvailableCoords() {
+    return this.board.flatMap((row, x) =>
+      row
+        .map((cell, y) => ({ cell, x, y }))
+        .filter(({ cell }) => cell.hit === false)
+        .map(({ x, y }) => [x, y])
+    );
+  }
+
   #isInBounds([x, y]) {
     if (x < 0 || x >= this.board.length) return false;
     if (y < 0 || y >= this.board[x].length) return false;

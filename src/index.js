@@ -83,5 +83,10 @@ enemyBoard.addEventListener('click', (event) => {
   const column = Number(event.target.dataset.column);
 
   game.attackEnemyBoard([row, column]);
+  DOM.renderBoard('user', game.user.board);
+
+  game.playComputerTurn();
   DOM.renderBoard('computer', game.computer.board);
+
+  DOM.renderMessage(game.message);
 });
