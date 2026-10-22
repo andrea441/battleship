@@ -83,7 +83,13 @@ enemyBoard.addEventListener('click', (event) => {
   const row = Number(event.target.dataset.row);
   const column = Number(event.target.dataset.column);
 
-  game.attackEnemyBoard([row, column]);
+  const attacked = game.attackEnemyBoard([row, column]);
+
+  if (!attacked) {
+    DOM.renderMessage(game.message);
+    return;
+  }
+
   DOM.renderBoard('computer', game.computer.board);
 
   if (game.phase === 'game-over') {

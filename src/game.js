@@ -54,18 +54,26 @@ class Game {
   }
 
   attackEnemyBoard(coordinates) {
-    if (this.phase !== 'player-turn') return;
+    try {
+      if (this.phase !== 'player-turn') return;
 
-    this.computer.board.receiveAttack(coordinates);
+      this.computer.board.receiveAttack(coordinates);
 
-    if (this.checkWinner() === 'user') {
-      this.phase = 'game-over';
-      this.message = 'User won!';
+      if (this.checkWinner() === 'user') {
+        this.phase = 'game-over';
+        this.message = 'User won!';
 
-      return;
+        return;
+      }
+
+      this.phase = 'computer-turn';
+
+      return true;
+    } catch (error) {
+      this.message = error.message;
+
+      return false;
     }
-
-    this.phase = 'computer-turn';
   }
 
   generateRandomEnemyShips() {

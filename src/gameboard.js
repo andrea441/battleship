@@ -30,8 +30,14 @@ class Gameboard {
 
   receiveAttack([x, y]) {
     if (!this.#isInBounds([x, y]))
-      throw new Error('Invalid coordinates. Place your ship in another spot.');
-    if (this.board[x][y].hit) return;
+      throw new Error(
+        'Invalid coordinates. Place your attack in another spot.'
+      );
+
+    if (this.board[x][y].hit)
+      throw new Error(
+        'Spot already hit. Please select another place to attack.'
+      );
 
     this.board[x][y].hit = true;
     if (this.board[x][y].ship) this.board[x][y].ship.hit();
