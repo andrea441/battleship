@@ -57,9 +57,15 @@ class Game {
     if (this.phase !== 'player-turn') return;
 
     this.computer.board.receiveAttack(coordinates);
-    this.phase = 'computer-turn';
 
-    // hay que jugar el turno de la computadora lol
+    if (this.checkWinner() === 'user') {
+      this.phase = 'game-over';
+      this.message = 'User won!';
+
+      return;
+    }
+
+    this.phase = 'computer-turn';
   }
 
   generateRandomEnemyShips() {
@@ -95,8 +101,23 @@ class Game {
       availableCells[Math.floor(Math.random() * availableCells.length)];
 
     this.user.board.receiveAttack(randomCoordinates);
+
+    if (this.checkWinner() === 'computer') {
+      this.phase = 'game-over';
+      this.message = 'Computer won!';
+
+      return;
+    }
+
     this.phase = 'player-turn';
     this.message = "Computer attacked, it's player's turn!";
+  }
+
+  checkWinner() {
+    if (this.user.board.allShipSunk()) return 'computer';
+    if (this.computer.board.allShipSunk()) return 'user';
+
+    return null;
   }
 
   startGame() {

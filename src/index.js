@@ -75,6 +75,7 @@ playerBoard.addEventListener('mouseout', () => {
 });
 
 enemyBoard.addEventListener('click', (event) => {
+  // this function allows clicking attacked cells
   if (!event.target.classList.contains('cell')) return;
 
   if (game.phase !== 'player-turn') return;
@@ -83,10 +84,15 @@ enemyBoard.addEventListener('click', (event) => {
   const column = Number(event.target.dataset.column);
 
   game.attackEnemyBoard([row, column]);
-  DOM.renderBoard('user', game.user.board);
+  DOM.renderBoard('computer', game.computer.board);
+
+  if (game.phase === 'game-over') {
+    DOM.renderMessage(game.message);
+    return;
+  }
 
   game.playComputerTurn();
-  DOM.renderBoard('computer', game.computer.board);
+  DOM.renderBoard('user', game.user.board);
 
   DOM.renderMessage(game.message);
 });
