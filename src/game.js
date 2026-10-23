@@ -62,11 +62,9 @@ class Game {
       if (this.checkWinner() === 'user') {
         this.phase = 'game-over';
         this.message = 'User won!';
-
-        return;
+      } else {
+        this.phase = 'computer-turn';
       }
-
-      this.phase = 'computer-turn';
 
       return true;
     } catch (error) {

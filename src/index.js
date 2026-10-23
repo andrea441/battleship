@@ -99,6 +99,5 @@ enemyBoard.addEventListener('click', (event) => {
 
   game.playComputerTurn();
   DOM.renderBoard('user', game.user.board);
-
   DOM.renderMessage(game.message);
 });
